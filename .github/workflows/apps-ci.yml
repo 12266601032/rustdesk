@@ -64,16 +64,16 @@ jobs:
         with:
           prefix-key: ${{ matrix.job.os }}
 
-      - name: Install flutter rust bridge deps
-        run: |
-          dart pub global activate ffigen --version 5.0.1
-          $exists = Test-Path ~/.cargo/bin/flutter_rust_bridge_codegen.exe
-          Push-Location ..
-          git clone https://github.com/SoLongAndThanksForAllThePizza/flutter_rust_bridge --depth=1
-          Push-Location flutter_rust_bridge/frb_codegen ; cargo install --path . ; Pop-Location
-          Pop-Location
-          Push-Location flutter ; flutter pub get ; Pop-Location
-          ~/.cargo/bin/flutter_rust_bridge_codegen --rust-input ./src/flutter_ffi.rs --dart-output ./flutter/lib/generated_bridge.dart
+#      - name: Install flutter rust bridge deps
+#        run: |
+#          dart pub global activate ffigen --version 5.0.1
+#          $exists = Test-Path ~/.cargo/bin/flutter_rust_bridge_codegen.exe
+#          Push-Location ..
+#          git clone https://github.com/SoLongAndThanksForAllThePizza/flutter_rust_bridge --depth=1
+#          Push-Location flutter_rust_bridge/frb_codegen ; cargo install --path . ; Pop-Location
+#          Pop-Location
+#          Push-Location flutter ; flutter pub get ; Pop-Location
+#          ~/.cargo/bin/flutter_rust_bridge_codegen --rust-input ./src/flutter_ffi.rs --dart-output ./flutter/lib/generated_bridge.dart
 
       - name: Restore from cache and install vcpkg
         uses: lukka/run-vcpkg@v7
@@ -172,15 +172,15 @@ jobs:
         with:
           prefix-key: ${{ matrix.job.os }}
 
-      - name: Install flutter rust bridge deps
-        shell: bash
-        run: |
-          dart pub global activate ffigen --version 5.0.1
-          # flutter_rust_bridge
-          pushd /tmp && git clone https://github.com/SoLongAndThanksForAllThePizza/flutter_rust_bridge --depth=1 && popd
-          pushd /tmp/flutter_rust_bridge/frb_codegen && cargo install --path . && popd
-          pushd flutter && flutter pub get && popd
-          ~/.cargo/bin/flutter_rust_bridge_codegen --rust-input ./src/flutter_ffi.rs --dart-output ./flutter/lib/generated_bridge.dart
+#      - name: Install flutter rust bridge deps
+#        shell: bash
+#        run: |
+#          dart pub global activate ffigen --version 5.0.1
+#          # flutter_rust_bridge
+#          pushd /tmp && git clone https://github.com/SoLongAndThanksForAllThePizza/flutter_rust_bridge --depth=1 && popd
+#          pushd /tmp/flutter_rust_bridge/frb_codegen && cargo install --path . && popd
+#          pushd flutter && flutter pub get && popd
+#          ~/.cargo/bin/flutter_rust_bridge_codegen --rust-input ./src/flutter_ffi.rs --dart-output ./flutter/lib/generated_bridge.dart
 
       - name: Restore from cache and install vcpkg
         uses: lukka/run-vcpkg@v7
