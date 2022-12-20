@@ -193,6 +193,10 @@ jobs:
           setupOnly: true
           vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
 
+      - name: Download sciter lib
+        run: |
+          wget https://raw.githubusercontent.com/c-smile/sciter-sdk/master/bin.osx/libsciter.dylib
+
       - name: Install vcpkg dependencies
         run: |
           $VCPKG_ROOT/vcpkg install libvpx libyuv opus
