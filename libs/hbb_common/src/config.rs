@@ -65,9 +65,10 @@ const CHARS: &'static [char] = &[
 ];
 
 pub const RENDEZVOUS_SERVERS: &'static [&'static str] = &[
-    "rs-ny.rustdesk.com",
-    "rs-sg.rustdesk.com",
-    "rs-cn.rustdesk.com",
+    // "rs-ny.rustdesk.com",
+    // "rs-sg.rustdesk.com",
+    // "rs-cn.rustdesk.com",
+    "172.28.32.207",
 ];
 pub const RENDEZVOUS_PORT: i32 = 21116;
 pub const RELAY_PORT: i32 = 21117;
@@ -737,7 +738,7 @@ const PEERS: &str = "peers";
 
 impl PeerConfig {
     pub fn load(id: &str) -> PeerConfig {
-        let _ = CONFIG.read().unwrap(); // for lock
+        let _lock = CONFIG.read().unwrap(); // for lock
         match confy::load_path(&Self::path(id)) {
             Ok(config) => {
                 let mut config: PeerConfig = config;
@@ -769,7 +770,7 @@ impl PeerConfig {
     }
 
     pub fn store(&self, id: &str) {
-        let _ = CONFIG.read().unwrap(); // for lock
+        let _lock = CONFIG.read().unwrap(); // for lock
         let mut config = self.clone();
         config.password = encrypt_vec_or_original(&config.password, PASSWORD_ENC_VERSION);
         config
@@ -936,7 +937,7 @@ pub struct LanPeers {
 
 impl LanPeers {
     pub fn load() -> LanPeers {
-        let _ = CONFIG.read().unwrap(); // for lock
+        let _lock = CONFIG.read().unwrap(); // for lock
         match confy::load_path(&Config::file_("_lan_peers")) {
             Ok(peers) => peers,
             Err(err) => {
