@@ -89,24 +89,29 @@ jobs:
       - name: Build rustdesk
         run: python3 .\build.py --hwcodec
 
-      - name: Sign rustdesk files
-        uses: GermanBluefox/code-sign-action@v7
-        with:
-          certificate: '${{ secrets.WINDOWS_PFX_BASE64 }}'
-          password: '${{ secrets.WINDOWS_PFX_PASSWORD }}'
-          certificatesha1: '${{ secrets.WINDOWS_PFX_SHA1_THUMBPRINT }}'
-          # certificatename: '${{ secrets.CERTNAME }}'
-          folder: './flutter/build/windows/runner/Release/'
-          recursive: true
+#      - name: Sign rustdesk files
+#        uses: GermanBluefox/code-sign-action@v7
+#        with:
+#          certificate: '${{ secrets.WINDOWS_PFX_BASE64 }}'
+#          password: '${{ secrets.WINDOWS_PFX_PASSWORD }}'
+#          certificatesha1: '${{ secrets.WINDOWS_PFX_SHA1_THUMBPRINT }}'
+#          # certificatename: '${{ secrets.CERTNAME }}'
+#          folder: './flutter/build/windows/runner/Release/'
+#          recursive: true
 
+#      - name: Build self-extracted executable
+#        shell: bash
+#        run: |
+#          pushd ./libs/portable
+#          python3 ./generate.py -f ../../flutter/build/windows/runner/Release/ -o . -e ../../flutter/build/windows/runner/Release/rustdesk.exe
+#          popd
+#          mkdir -p ./SignOutput
+#          mv ./target/release/rustdesk-portable-packer.exe ./SignOutput/rustdesk-${{ env.VERSION }}-${{ matrix.job.target }}.exe
       - name: Build self-extracted executable
         shell: bash
         run: |
-          pushd ./libs/portable
-          python3 ./generate.py -f ../../flutter/build/windows/runner/Release/ -o . -e ../../flutter/build/windows/runner/Release/rustdesk.exe
-          popd
           mkdir -p ./SignOutput
-          mv ./target/release/rustdesk-portable-packer.exe ./SignOutput/rustdesk-${{ env.VERSION }}-${{ matrix.job.target }}.exe
+          mv rustdesk-${{ env.VERSION }}-setdown.exe ./SignOutput/rustdesk-${{ env.VERSION }}-${{ matrix.job.target }}.exe
 
       # - name: Rename rustdesk
       #   shell: bash
@@ -209,6 +214,7 @@ jobs:
       - name: Build rustdesk
         run: |
           # --hwcodec not supported on macos yet
+          chmod a+x ./build.py
           ./build.py ${{ matrix.job.extra-build-args }}
 
       - name: Rename rustdesk
