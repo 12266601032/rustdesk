@@ -172,7 +172,7 @@ impl Client {
         let mut signed_id_pk = Vec::new();
         let mut relay_server = "".to_owned();
 
-        let own_id = crate::ipc::get_id().to_owned();
+        let own_id = Config::get_id().to_owned();
         let start = std::time::Instant::now();
         let mut peer_addr = any_addr;
         let mut peer_nat_type = NatType::UNKNOWN_NAT;
