@@ -216,10 +216,10 @@ jobs:
           rustc -V
 
       - name: Build
-          uses: actions-rs/cargo@v1
-          with:
-            command: build
-            args: --locked --release --target=${{ matrix.job.target }}
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --locked --release --target=${{ matrix.job.target }}
 
       - name: Build rustdesk
         run: |
