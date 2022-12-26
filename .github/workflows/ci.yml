@@ -10,8 +10,8 @@ on:
   push:
     branches:
       - master
-    tags:
-      - '*'
+#    tags:
+#      - '*'
     paths-ignore:
       - ".github/**"
 
