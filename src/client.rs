@@ -207,11 +207,13 @@ impl Client {
         let mut signed_id_pk = Vec::new();
         let mut relay_server = "".to_owned();
 
+        let own_id = Config::get_id().to_owned();
         let start = std::time::Instant::now();
         let mut peer_addr = any_addr;
         let mut peer_nat_type = NatType::UNKNOWN_NAT;
         let my_nat_type = crate::get_nat_type(100).await;
         let mut is_local = false;
+
         for i in 1..=3 {
             log::info!("#{} punch attempt with {}, id: {}", i, my_addr, peer);
             let mut msg_out = RendezvousMessage::new();
@@ -223,6 +225,7 @@ impl Client {
             };
             msg_out.set_punch_hole_request(PunchHoleRequest {
                 id: peer.to_owned(),
+                own_id: own_id.to_owned(),
                 token: token.to_owned(),
                 nat_type: nat_type.into(),
                 licence_key: key.to_owned(),
